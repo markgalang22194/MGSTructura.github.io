@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Structural Engineer Portfolio</title>
+  <meta name="description" content="Portfolio of structural designs, analyses, and projects." />
+  <meta name="keywords" content="structural engineer, steel design, concrete design, seismic, NSCP, AISC, portfolio" />
+  <style>
+    /* ====== Design tokens ====== */
+    :root{
+      --bg: #0b1220;          /* deep navy */
+      --card: #111a2e;        /* slightly lighter */
+      --text: #e6eefc;        /* near white */
+      --muted: #a9b4c7;       /* muted text */
+      --primary: #4fa3ff;     /* accent */
+      --accent: #70f0c2;      /* accent 2 */
+      --ring: rgba(79,163,255,.45);
+      --ok: #33c38c;
+      --warn: #ffcf5b;
+      --bad: #ff6b6b;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.04);
+    }
+
+    @media (prefers-color-scheme: light){
+      :root{ --bg:#f7f9fe; --card:#ffffff; --text:#142033; --muted:#4a5568; --shadow:0 10px 30px rgba(22,28,45,.08), inset 0 0 0 1px rgba(10,14,25,.06);}  
+    }
+
+    /* ====== Base ====== */
+    html, body {height:100%;}
+    body{ margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji"; background: radial-gradient(1200px 800px at 80% -10%, rgba(79,163,255,.18), transparent 60%), radial-gradient(1000px 700px at -10% 10%, rgba(112,240,194,.15), transparent 60%), var(--bg); color: var(--text); }
+    a{ color: var(--primary); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+    img{ max-width:100%; display:block; }
+    .container{ width:min(1100px, 92%); margin-inline:auto; }
+    .section{ padding: 64px 0; }
+
+    /* ====== Header ====== */
+    header{ position:sticky; top:0; backdrop-filter: blur(10px); background: linear-gradient(180deg, rgba(10,15,25,.75), rgba(10,15,25,.35)); border-bottom: 1px solid rgba(255,255,255,.06); z-index:10; }
+    nav{ display:flex; align-items:center; justify-content:space-between; padding: 14px 0; }
+    .brand{ display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.3px; }
+    .logo{ width:36px; height:36px; border-radius:50%; background: conic-gradient(from 210deg, var(--primary), var(--accent)); box-shadow: 0 0 0 4px rgba(255,255,255,.06); }
+    .navlinks{ display:flex; gap:18px; font-size:15px; }
+    .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius: 999px; background:linear-gradient(180deg, var(--primary), #2b7ad6); color:white; border: none; cursor:pointer; box-shadow: var(--shadow); }
+    .btn.secondary{ background: linear-gradient(180deg, #303b58, #1b2541); color: var(--text); }
+
+    /* ====== Hero ====== */
+    .hero{ display:grid; grid-template-columns: 1.2fr 1fr; gap:34px; align-items:center; padding: 52px 0 10px; }
+    .hero h1{ font-size: clamp(28px, 4vw, 44px); line-height:1.1; margin: 0 0 8px; }
+    .hero p{ color: var(--muted); font-size: clamp(16px, 2.2vw, 18px); }
+    .stats{ display:flex; gap:18px; margin-top:18px; flex-wrap: wrap; }
+    .pill{ background: rgba(255,255,255,.06); padding:10px 14px; border-radius:999px; font-size:14px; border:1px solid rgba(255,255,255,.06); }
+    .card{ background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); border:1px solid rgba(255,255,255,.06); }
+    .card.pad{ padding: 22px; }
+
+    /* ====== Grid / Projects ====== */
+    .toolbar{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:18px; }
+    .filter{ padding:8px 12px; border-radius: 999px; border:1px solid rgba(255,255,255,.08); background: rgba(255,255,255,.04); color: var(--text); cursor:pointer; }
+    .filter.active{ outline: 3px solid var(--ring); }
+
+    .grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
+
+    .project{ position:relative; overflow:hidden; display:flex; flex-direction:column; }
+    .project .thumb{ aspect-ratio: 16/10; background: radial-gradient(400px 200px at 10% 10%, rgba(79,163,255,.35), transparent 60%), radial-gradient(400px 240px at 90% 60%, rgba(112,240,194,.35), transparent 60%), linear-gradient(135deg, #1a2443, #0f1a32); border-bottom:1px solid rgba(255,255,255,.06); }
+    .project .body{ padding:16px 16px 18px; display:flex; flex-direction:column; gap:8px; }
+    .project h3{ font-size:18px; margin:0; }
+    .meta{ font-size:13px; color: var(--muted); display:flex; gap:8px; flex-wrap:wrap; }
+    .tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:4px; }
+    .tag{ font-size:12px; padding:4px 8px; border-radius: 999px; border:1px solid rgba(255,255,255,.08); color: var(--muted); }
+    .actions{ margin-top:auto; display:flex; gap:10px; }
+
+    /* ====== About, Skills ====== */
+    .twocol{ display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
+    .list{ display:grid; gap:10px; }
+    .list .row{ display:flex; justify-content:space-between; gap:10px; background: rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.06); border-radius: 12px; padding: 10px 12px; }
+    .label{ color: var(--muted); font-size:14px; }
+
+    /* ====== Footer ====== */
+    footer{ padding: 24px 0 48px; color: var(--muted); font-size:14px; }
+
+    /* ====== Responsive ====== */
+    @media (max-width: 920px){
+      .hero{ grid-template-columns: 1fr; }
+      .grid{ grid-template-columns: 1fr 1fr; }
+      .twocol{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 620px){
+      .grid{ grid-template-columns: 1fr; }
+      nav .navlinks{ display:none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- ====== Header ====== -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand"><div class="logo" aria-hidden="true"></div><span>Structural Portfolio</span></div>
+        <div class="navlinks">
+          <a href="#projects">Projects</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <a class="btn" href="#contact" aria-label="Jump to contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ====== Hero ====== -->
+  <section class="section">
+    <div class="container hero">
+      <div>
+        <h1>Hi, I’m <span style="background:linear-gradient(90deg,var(--primary),var(--accent)); -webkit-background-clip:text; background-clip:text; color:transparent;">Your Name</span> — Structural Engineer.</h1>
+        <p>Experienced in steel, RC, and seismic design across mid‑rise buildings and industrial facilities. I use <strong>NSCP / ACI / AISC</strong> and tools like <strong>ETABS, MIDAS Gen, SAP2000, RAM Connection</strong>.</p>
+        <div class="stats">
+          <span class="pill">10+ years experience</span>
+          <span class="pill">PECE / CE License</span>
+          <span class="pill">Lateral & gravity specialist</span>
+        </div>
+        <div style="margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn" href="#projects">See Projects</a>
+          <a class="btn secondary" href="assets/CV.pdf" target="_blank" rel="noopener">Download CV</a>
+        </div>
+      </div>
+      <div class="card pad">
+        <h3 style="margin-top:0">Quick Facts</h3>
+        <div class="list" style="margin-top:10px;">
+          <div class="row"><span class="label">Location</span><span>City, Country</span></div>
+          <div class="row"><span class="label">Expertise</span><span>Steel frames, RC, Seismic</span></div>
+          <div class="row"><span class="label">Software</span><span>MIDAS Gen, ETABS, RAM, Revit</span></div>
+          <div class="row"><span class="label">Certifications</span><span>e.g., CE, ASEP</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Projects ====== -->
+  <section id="projects" class="section" aria-label="Projects">
+    <div class="container">
+      <div style="display:flex; align-items:end; justify-content:space-between; gap:14px; flex-wrap:wrap;">
+        <div>
+          <h2 style="margin:0 0 6px;">Selected Projects</h2>
+          <p style="margin:0; color:var(--muted)">Add your best structural designs. Use the filters to showcase specialties.</p>
+        </div>
+        <div class="toolbar" role="toolbar" aria-label="Project filters">
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="steel">Steel</button>
+          <button class="filter" data-filter="rc">Reinforced Concrete</button>
+          <button class="filter" data-filter="seismic">Seismic</button>
+          <button class="filter" data-filter="bim">BIM</button>
+        </div>
+      </div>
+
+      <div class="grid" id="projectGrid">
+        <!-- Project Card Template (duplicate and edit) -->
+        <article class="project card" data-tags="steel seismic bim">
+          <div class="thumb" role="img" aria-label="10‑story steel office with dual system"></div>
+          <div class="body">
+            <h3>10‑Story Steel Office (Dual System)</h3>
+            <div class="meta">
+              <span>Location: Lipa City</span>
+              <span>Year: 2025</span>
+              <span>Role: Lead Structural</span>
+            </div>
+            <div class="tags">
+              <span class="tag">AISC 360</span>
+              <span class="tag">NSCP 2015</span>
+              <span class="tag">MIDAS Gen</span>
+            </div>
+            <div class="actions">
+              <a class="btn secondary" href="#" aria-label="Open drawings">Drawings</a>
+              <a class="btn secondary" href="#" aria-label="Open report">Report</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project card" data-tags="rc seismic">
+          <div class="thumb" role="img" aria-label="6‑story RC dormitory"></div>
+          <div class="body">
+            <h3>6‑Story RC Dormitory</h3>
+            <div class="meta">
+              <span>Location: Makati</span>
+              <span>Year: 2024</span>
+              <span>Role: Checker</span>
+            </div>
+            <div class="tags">
+              <span class="tag">ACI 318</span>
+              <span class="tag">NSCP</span>
+              <span class="tag">ETABS</span>
+            </div>
+            <div class="actions">
+              <a class="btn secondary" href="#">Calculations</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project card" data-tags="steel bim">
+          <div class="thumb" role="img" aria-label="Industrial pipe rack"></div>
+          <div class="body">
+            <h3>Industrial Pipe Rack Upgrade</h3>
+            <div class="meta">
+              <span>Location: Batangas</span>
+              <span>Year: 2023</span>
+              <span>Role: Connection Design</span>
+            </div>
+            <div class="tags">
+              <span class="tag">RAM Connection</span>
+              <span class="tag">BIM</span>
+              <span class="tag">STAAD/SAP</span>
+            </div>
+            <div class="actions">
+              <a class="btn secondary" href="#">Gallery</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project card" data-tags="rc">
+          <div class="thumb" role="img" aria-label="Mat foundation"></div>
+          <div class="body">
+            <h3>Mat Foundation with STP & Cistern</h3>
+            <div class="meta">
+              <span>Location: —</span>
+              <span>Year: 2022</span>
+              <span>Role: Designer</span>
+            </div>
+            <div class="tags">
+              <span class="tag">Soil‑Structure Interaction</span>
+              <span class="tag">Winkler Springs</span>
+              <span class="tag">ks via Bowles</span>
+            </div>
+            <div class="actions">
+              <a class="btn secondary" href="#">Model Notes</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project card" data-tags="seismic">
+          <div class="thumb" role="img" aria-label="Retrofit assessment"></div>
+          <div class="body">
+            <h3>Seismic Retrofit Assessment</h3>
+            <div class="meta">
+              <span>Location: —</span>
+              <span>Year: 2021</span>
+              <span>Role: Team Lead</span>
+            </div>
+            <div class="tags">
+              <span class="tag">Performance‑Based</span>
+              <span class="tag">Nonlinear</span>
+            </div>
+            <div class="actions">
+              <a class="btn secondary" href="#">Summary</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="project card" data-tags="bim">
+          <div class="thumb" role="img" aria-label="Revit modeling"></div>
+          <div class="body">
+            <h3>Revit RC & Steel Modeling</h3>
+            <div class="meta">
+              <span>Location: —</span>
+              <span>Year: 2020</span>
+              <span>Role: BIM Coordinator</span>
+            </div>
+            <div class="tags">
+              <span class="tag">Revit</span>
+              <span class="tag">Clash Detection</span>
+            </div>
+            <div class="actions">
+              <a class="btn secondary" href="#">Snapshots</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== About ====== -->
+  <section id="about" class="section">
+    <div class="container twocol">
+      <div class="card pad">
+        <h2 style="margin-top:0">About</h2>
+        <p>Write a short, human bio that highlights your approach to safety, constructability, and cost. Mention design codes you use and markets served (commercial, industrial, infra). Keep it to ~120–150 words.</p>
+        <ul>
+          <li>Focus areas: steel connections, dual systems, mat foundations</li>
+          <li>Deliverables: calcs, drawings, models, specs</li>
+          <li>Workflow: analysis → design → BIM → review → issue</li>
+        </ul>
+      </div>
+      <div class="card pad">
+        <h2 style="margin-top:0">Skills & Tools</h2>
+        <div class="list" style="margin-top:10px;">
+          <div class="row"><span class="label">Codes</span><span>NSCP, ACI 318, AISC 360, ASCE 7</span></div>
+          <div class="row"><span class="label">Software</span><span>MIDAS Gen, ETABS, SAP2000, RAM Connection, Revit</span></div>
+          <div class="row"><span class="label">Deliverables</span><span>Design calcs, connection design, shop drawings, BIM</span></div>
+          <div class="row"><span class="label">QA/QC</span><span>Peer review, code checks, constructability</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== Contact ====== -->
+  <section id="contact" class="section">
+    <div class="container twocol">
+      <div class="card pad">
+        <h2 style="margin-top:0">Contact</h2>
+        <p>Prefer email with a brief scope, timeline, and files. Replace the mailto link with any form service (e.g., Formspree) later.</p>
+        <p><a class="btn" href="mailto:youremail@example.com?subject=Inquiry%20from%20Portfolio">Email Me</a></p>
+      </div>
+      <div class="card pad">
+        <h2 style="margin-top:0">Downloads</h2>
+        <ul>
+          <li><a href="assets/selected-works.pdf" target="_blank" rel="noopener">Selected Works (PDF)</a></li>
+          <li><a href="assets/CV.pdf" target="_blank" rel="noopener">Curriculum Vitae</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div style="display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+        <span>© <span id="year"></span> Your Name. All rights reserved.</span>
+        <span>Built with HTML/CSS. Hosted on GitHub Pages.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ====== Dynamic year ======
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ====== Simple tag filter ======
+    const filters = document.querySelectorAll('.filter');
+    const cards = document.querySelectorAll('.project');
+
+    function applyFilter(tag){
+      cards.forEach(card => {
+        const tags = card.getAttribute('data-tags');
+        const show = tag === 'all' || (tags && tags.includes(tag));
+        card.style.display = show ? 'flex' : 'none';
+      });
+    }
+
+    filters.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filters.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilter(btn.dataset.filter);
+      })
+    });
+
+    // ====== Smooth anchor scroll ======
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if(el){ e.preventDefault(); el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      })
+    });
+  </script>
+
+  <!--
+  =======================
+  HOW TO CUSTOMIZE QUICKLY
+  =======================
+  1) Replace "Your Name" in the hero and footer.
+  2) Update Quick Facts, About, Skills.
+  3) Duplicate a <article class="project"> card for more projects. Update title, meta, tags, and action links.
+  4) Put your PDFs/images under an "assets" folder in the repo, then update links (e.g., assets/CV.pdf).
+  5) To change colors, edit CSS variables at the top (e.g., --primary, --accent).
+  6) For a custom domain later, add a CNAME file in the repo (e.g., portfolio.yourdomain.com).
+  -->
+</body>
+</html>
